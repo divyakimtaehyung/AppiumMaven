@@ -1,4 +1,130 @@
- Set<String> contexts = driver.getContextHandles();
+//touch 
+ TouchAction t=new TouchAction(driver);
+        //long press(source) moved to any one of the object (destination)and release it
+        WebElement source=driver.findElements(By.className("android.view.View")).get(0);
+        WebElement dest=driver.findElements(By.className("android.view.View")).get(1);
+        t.longPress(longPressOptions().withElement(element(source))).moveTo(element(dest)).release().perform();
+        //t.longPress((element(source))).moveTo(element(dest)).release().perform();
+
+driver.findElementByAndroidUIAutomator("text(\"Views\")").click();
+        driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"WebView3\"))");
+        
+       
+       TouchActions action = new TouchActions(driver);
+action.scroll(element, 10, 100);
+action.perform();
+
+HashMap<String, Object> scrollObject = new HashMap();
+AndroidElement element = (AndroidElement) appiumDriver.findElement(MobileBy.AndroidUIAutomator("resourceId(\"io.appium.android.apis:id/list2\")"));
+scrollObject.put("elementId", element.getId());
+scrollObject.put("strategy", "-android uiautomator");
+scrollObject.put("selector", "text(\"Beaufort\")");
+appiumDriver.executeScript("mobile: scroll", scrollObject);
+       
+   scrollObject.put("elementId", element.getId());
+scrollObject.put("direction", "down");
+scrollObject.put("percent", 1);
+appiumDriver.executeScript("mobile: scrollGesture", scrollObject);
+
+
+
+// Animation default time:
+    //  - iOS: 200 ms
+    // final value depends on your app and could be greater
+    final int ANIMATION_TIME = 200; // ms
+    final HashMap<String, String> scrollObject = new HashMap<String, String>();
+
+    switch (dir) {
+        case DOWN: // from down to up (! differs from mobile:swipe)
+            scrollObject.put("direction", "down");
+            break;
+        case UP: // from up to down (! differs from mobile:swipe)
+            scrollObject.put("direction", "up");
+            break;
+        case LEFT: // from left to right (! differs from mobile:swipe)
+            scrollObject.put("direction", "left");
+            break;
+        case RIGHT: // from right to left (! differs from mobile:swipe)
+            scrollObject.put("direction", "right");
+            break;
+        default:
+            throw new IllegalArgumentException("mobileScrollIOS(): dir: '" + dir + "' NOT supported");
+    }
+    try {
+        driver.executeScript("mobile:scroll", scrollObject); // swipe faster then scroll
+        Thread.sleep(ANIMATION_TIME); // always allow swipe action to complete
+    } catch (Exception e) {
+        System.err.println("mobileScrollIOS(): FAILED\n" + e.getMessage());
+        return;
+    }
+}
+
+/**
+ * Performs screen swipe
+ *
+ * @param dir the direction of swipe
+ * @version java-client: 7.3.0
+ **/
+public void mobileSwipeScreenIOS(Direction dir) {
+    System.out.println("mobileSwipeScreenIOS(): dir: '" + dir + "'"); // always log your actions
+
+    // Animation default time:
+    //  - iOS: 200 ms
+    // final value depends on your app and could be greater
+    final int ANIMATION_TIME = 200; // ms
+    final HashMap<String, String> scrollObject = new HashMap<String, String>();
+
+    switch (dir) {
+        case DOWN: // from up to down (! differs from mobile:scroll)
+            scrollObject.put("direction", "down");
+            break;
+        case UP: // from down to up  (! differs from mobile:scroll)
+            scrollObject.put("direction", "up");
+            break;
+        case LEFT: // from right to left  (! differs from mobile:scroll)
+            scrollObject.put("direction", "left");
+            break;
+        case RIGHT: // from left to right  (! differs from mobile:scroll)
+            scrollObject.put("direction", "right");
+            break;
+        default:
+            throw new IllegalArgumentException("mobileSwipeScreenIOS(): dir: '" + dir + "' NOT supported");
+    }
+    try {
+        driver.executeScript("mobile:swipe", scrollObject);
+        Thread.sleep(ANIMATION_TIME); // always allow swipe action to complete
+    } catch (Exception e) {
+        System.err.println("mobileSwipeScreenIOS(): FAILED\n" + e.getMessage());
+        return;
+    }
+    
+    Scrolling (up or down) is an input action performed with a mouse scroll wheel or a mouse pointer interacting with a scroll bar.
+
+Swiping up/down is a ‘touch’ input action performed on a touchpad, touch screen, mobile or tablet.
+
+Both Scrolling or Swiping are essentially the same action performed with different input controllers. There are some minor differences such as tap versus click. Each has its own inherent limitations.
+    
+    
+      As usual swipe performs swipe action while scroll tries to change one visible view port only.
+
+!Note! Scroll direction differs between scroll and swipe commands 
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+
+
+Set<String> contexts = driver.getContextHandles();
 
         // made sure we have web view content
         // assertThat(contexts.size(), greaterThan(1));
